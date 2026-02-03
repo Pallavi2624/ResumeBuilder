@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Interactive Resume Builder</h1>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="form-container">
+            <form id="resumeForm">
+                <div class="form-section">
+                    <h2>Personal Information</h2>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="(123) 456-7890">
+                    </div>
+                    <div class="form-group">
+                        <label for="summary">Profile Summary</label>
+                        <textarea id="summary" rows="4" placeholder="Brief summary about yourself..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Education</h2>
+                    <div id="educationFields">
+                        <div class="education-entry">
+                            <div class="form-group">
+                                <label>Institution</label>
+                                <input type="text" class="education-institution" placeholder="University Name">
+                            </div>
+                            <div class="form-group">
+                                <label>Degree</label>
+                                <input type="text" class="education-degree" placeholder="Bachelor of Science">
+                            </div>
+                            <div class="form-group">
+                                <label>Field of Study</label>
+                                <input type="text" class="education-field" placeholder="Computer Science">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half-width">
+                                    <label>Start Date</label>
+                                    <input type="text" class="education-start" placeholder="2015">
+                                </div>
+                                <div class="form-group half-width">
+                                    <label>End Date</label>
+                                    <input type="text" class="education-end" placeholder="2019">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" id="addEducation">+ Add Education</button>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Skills</h2>
+                    <div class="skills-container" id="skillsContainer">
+                        <div class="skill-option">
+                            <input type="checkbox" id="skill1" value="HTML" checked>
+                            <label for="skill1">HTML</label>
+                        </div>
+                        <div class="skill-option">
+                            <input type="checkbox" id="skill2" value="CSS" checked>
+                            <label for="skill2">CSS</label>
+                        </div>
+                        <div class="skill-option">
+                            <input type="checkbox" id="skill3" value="JavaScript" checked>
+                            <label for="skill3">JavaScript</label>
+                        </div>
+                        <div class="skill-option">
+                            <input type="checkbox" id="skill4" value="React">
+                            <label for="skill4">React</label>
+                        </div>
+                        <div class="skill-option">
+                            <input type="checkbox" id="skill5" value="Node.js">
+                            <label for="skill5">Node.js</label>
+                        </div>
+                        <div class="skill-option">
+                            <input type="checkbox" id="skill6" value="Python">
+                            <label for="skill6">Python</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="customSkill">Add Custom Skill</label>
+                        <div class="skill-input-container">
+                            <input type="text" id="customSkill" placeholder="Enter a skill">
+                            <button type="button" class="add-skill-btn" id="addSkillBtn">Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Experience</h2>
+                    <div id="experienceFields">
+                        <div class="experience-entry">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input type="text" class="experience-title" placeholder="Software Developer">
+                            </div>
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" class="experience-company" placeholder="Tech Corp">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half-width">
+                                    <label>Start Date</label>
+                                    <input type="text" class="experience-start" placeholder="June 2019">
+                                </div>
+                                <div class="form-group half-width">
+                                    <label>End Date</label>
+                                    <input type="text" class="experience-end" placeholder="Present">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="experience-description" rows="3" placeholder="Describe your responsibilities and achievements..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" id="addExperience">+ Add Experience</button>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn" id="resetBtn">Reset Form</button>
+                    <button type="button" class="btn primary" id="downloadBtn">Download PDF</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="preview-container">
+            <h2>Resume Preview</h2>
+            <div class="resume" id="resumePreview">
+                <div class="resume-header">
+                    <h1 id="previewName">Your Name</h1>
+                    <div class="contact-info">
+                        <span id="previewEmail">email@example.com</span> | 
+                        <span id="previewPhone">(123) 456-7890</span>
+                    </div>
+                </div>
+                
+                <div class="resume-section">
+                    <h2>Profile</h2>
+                    <p id="previewSummary">Brief summary about yourself and your career objectives.</p>
+                </div>
+                
+                <div class="resume-section">
+                    <h2>Education</h2>
+                    <div id="previewEducation">
+                        <div class="education-item">
+                            <h3>University Name</h3>
+                            <div class="education-details">
+                                <span class="degree">Bachelor of Science in Computer Science</span>
+                                <span class="dates">2015 - 2019</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="resume-section">
+                    <h2>Skills</h2>
+                    <div class="skills-list" id="previewSkills">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                </div>
+                
+                <div class="resume-section">
+                    <h2>Experience</h2>
+                    <div id="previewExperience">
+                        <div class="experience-item">
+                            <h3>Software Developer <span class="company">at Tech Corp</span></h3>
+                            <div class="experience-dates">June 2019 - Present</div>
+                            <p class="experience-description">Describe your responsibilities and achievements in this role.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
